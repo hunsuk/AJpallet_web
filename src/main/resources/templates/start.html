@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>아주렌탈</title>
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .customoverlay {
+            position: relative;
+            bottom: 85px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            border-bottom: 2px solid #ddd;
+            float: left;
+        }
+
+        .customoverlay:nth-of-type(n) {
+            border: 0;
+            box-shadow: 0px 1px 2px #888;
+        }
+
+        .customoverlay a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            background: #d95050;
+            background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+        }
+
+        .customoverlay .title {
+            display: block;
+            text-align: center;
+            background: #fff;
+            margin-right: 35px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .customoverlay:after {
+            content: '';
+            position: absolute;
+            margin-left: -12px;
+            left: 50%;
+            bottom: -12px;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+    <!--        <script defer src="js/index.js"></script>-->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eee7369355a4f95afc8a33ad53fbdc49"></script>
+
+</head>
+<body class="AZ-font" id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container px-4">
+        <img class="navbar-brand" style="width: 4%; height: 4%;" src="img/index.png"/>
+        <a class="navbar-brand" href="#page-top">AJ렌탈</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-link">
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-primary  text-white"
+        style="background-image: url('img/main1.jpg');filter: blur(0px) brightness(80%); padding-top: 10rem; padding-bottom: 10rem;">
+    <div class="container px-4 text-center AZ-font" style="filter: blur(0) !important;">
+        <h1 class="fw-bolder">사용 환경에 특화 된 파렛트 렌탈 시스템</h1>
+        <p class="lead">원하는 곳에 필요한 만큼, 대여부터 회수까지 빠르고 편리하게 제공합니다.</p>
+        <br>
+        <div>
+            <img type="button" onclick="location.href='/login?auth=user'    " style="width: 20%; height: 50%; margin-right: 50px;" src="img/consumer.png">
+            <img type="button" onclick="location.href='/login?auth=admin'" style="width: 20%; height: 50%" src="img/manager.png">
+        </div>
+    </div>
+</header>
+<!-- About section-->
+<section id="about" class="p-sm-8">
+    <div class="container px-4 AZ-font">
+
+        <h5 style="color: #E52415">사업소개</h5>
+        <h4>파렛트 렌탈</h4>
+        <div class="text-muted">
+            <img  src="img/main2.jpg" style=" position: absolute; right: 52px; width: 36%; height: 50%; top: 65%;">
+            <a style="position: relative">고객이 원하는 곳에, 원하는 날짜에 미리 예약하여</a>
+            <br/>
+            <a style="position: relative">렌탈하는 것이 가능하며, 각 파렛트마다의 코드가 있어</a>
+            <br>
+            <a>회수, 분실 등의 현황을 쉽게 파악하고 요청 할 수 있습니다.</a>
+        </div>
+
+    </div>
+</section>
+<!-- Services section-->
+<section class="bg-secondary bg-opacity-25 p-sm-13" id="services">
+    <div class="container px-4">
+        <img src="img/main3.jpg" style=" position: absolute; padding-left:5%;  right: 68%; width: 35%; height: 50%; top: 90%;">
+        <div class=" AZ-font" style="position: relative">
+            <h2 style="padding-left: 40%">Services we offer</h2>
+            <br>
+            <a class="text-muted" style="padding-left: 40%">20여 년간 축적해 온 유,무형의 경쟁력을 기반으로 산업 내 리더십과 신뢰를 꾸준히 확보해 왔습니다.</a>
+            <br/>
+            <a class="text-muted" style="padding-left: 40%">고객의 변화하는 요구에 탄력적으로 대응 가능한 서비스 역량을 갖추고 편리함을 공유하겠습니다.</a>
+        </div>
+    </div>
+    </div>
+</section>
+<footer class="py-5 bg-dark">
+    <div class="container px-4"><p class="m-0 text-center text-white">05836 서울특별시송파구정의로 8길 9 AJ빌딩</p>
+        <div class="container px-4"><p class="m-0 text-center text-white">대표전화 1588-0053</p>
+            <div class="container px-4"><p class="m-0 text-center text-white">Copyright AJ Networks Corporation. All
+                rights reserved.</p>
+            </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>

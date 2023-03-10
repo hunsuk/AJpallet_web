@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1,h2,h3,h4,h5,h6{
+    margin-top: 0;
+    font-weight: 500;
+}
+
+h1{
+    font-size: 28px;
+}
+h2{
+    font-stretch: 18px;
+}
+h3{
+    font-stretch: 15px;
+    margin-bottom: 0px;
+}
+
+input,
+button,
+select {
+    outline: none;
+}

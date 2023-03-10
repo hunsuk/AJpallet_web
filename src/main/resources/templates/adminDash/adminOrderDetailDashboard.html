@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="ko"
+      xmlns:th="www.thymeleaf.org">
+
+<head>
+    <style type="text/css">
+        .leftSideBar img {
+            width: 80%;
+            margin: 10%;
+        }
+
+        ul {
+            list-style-type: none;
+            background-color: #191919;
+            width: 4%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            height: 80%;
+            overflow: auto;
+        }
+
+        .secondUl {
+            list-style-type: none;
+            background-color: #767676;
+            width: 4%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            left: 0px;
+            top: 80%;
+            height: 20%;
+            overflow: auto;
+        }
+
+        .second {
+            width: 80%;
+            margin: 10%;
+        }
+
+        li a {
+            text-decoration: none;
+            display: block;
+            color: #000;
+            padding: 8px 15px 8px 15px;
+            font-weight: bold;
+        }
+
+        li a.job {
+            background-color: tomato;
+            color: #fff;
+        }
+
+        li a:hover:not(.job) {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .orderManage {
+            margin-left: 10%;
+            margin-right: 10%;
+            padding: 1px 0px;
+            display: flex;
+
+            border-left: none;
+            border-right: none;
+            margin-top: 12px;
+
+        }
+
+        .orderManage h2 {
+            margin: 1%;
+        }
+
+
+        #outcircle {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 530px;
+            height: 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        #outcircle2 {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 150px;
+            height: 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        #incircle {
+            margin: auto;
+            text-align: left;
+        }
+
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+        }
+
+        .custom-select select {
+            display: none; /*hide original SELECT element:*/
+        }
+
+        .select-selected {
+            background-color: none;
+
+        }
+
+        #buttonReset {
+            margin-left: 31%;
+            background-color: #E52415;
+            color: #FFF;
+            border: none;
+            width: 10%;
+        }
+
+        /*style the arrow inside the select element:*/
+        .select-selected:after {
+            content: "";
+            top: 20px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            margin-left: 50px;
+            border: 6px solid transparent;
+            border-color: #e60808 transparent transparent transparent;
+        }
+
+        /*point the arrow upwards when the select box is open (active):*/
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #e60808 transparent;
+
+        }
+
+        /*style the items (options), including the selected item:*/
+        .select-items div, .select-selected {
+            padding: 8px 40px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        /*style items (options):*/
+        .select-items {
+            position: absolute;
+            background-color: #fff;
+
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+
+        /*hide the items when the select box is closed:*/
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div:hover, .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+
+            text-align: center;
+            border: none;
+            border-right: 2px solid #c8c8c8;
+            border-bottom: 2px solid #c8c8c8;
+        }
+
+        th {
+            border: none;
+            border-top: 2px solid #c8c8c8;
+            border-bottom: 2px solid #c8c8c8;
+            background: #e7e7e7;
+            color: #191919;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            height: 100px;
+            border: none;
+            border-spacing: 0
+        }
+
+        .lastTd {
+
+        }
+
+        .col1 {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .col2 {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+        .baseMargin {
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        .intendMargin {
+            margin-left: 32px;
+            margin-right: 32px;
+        }
+
+        .buttonMargin {
+            margin-top: 1%;
+            margin-right: 12px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<ul class="leftSideBar">
+    <li><img style="width: 70%; margin: 10%" src="img/ajIcon.png"/></li>
+    <li><img type="button" onclick="showMap()" src="img/adminDashboardIcon.png"/></li>
+    <li><img type="button" onclick="showOrder()" src="img/adminOrderManageIcon.png"/></li>
+    <li><img type="button" onclick="showDeliver()" src="img/adminParcleState.png"/></li>
+    <li><img type="button" onclick="showDemand()" src="img/adminDemendIcon.png"/></li>
+    <li><img type="button" onclick="showStatist()" src="img/adminStatisticsIcon.png"/></li>
+</ul>
+<ul class="secondUl">
+    <li><img class="second" src="img/adminMyInfoIcon.png"/></li>
+    <li><img class="second" src="img/adminHomeIcon.png"/></li>
+
+</ul>
+
+
+<div id="orderWindow">
+    <div class="orderManage">
+        <h1 style="margin-bottom: 32px;">주문 상세사항</h1>
+    </div>
+
+    <div class="orderManage">
+        <table>
+            <tr>
+                <th>제품이름</th>
+                <th>수량</th>
+                <th>주문일</th>
+                <th>수령일</th>
+                <th>반납일</th>
+                <th>주문처</th>
+                <th>지점</th>
+            </tr>
+            <tr>
+                <td>파렛트 A11</td>
+                <td>24</td>
+                <td>2023.01.02</td>
+                <td>2023.01.19</td>
+                <td>2023.01.19</td>
+                <td>삼성전자</td>
+                <td style="border-right: none">가1234</td>
+            </tr>
+        </table>
+    </div>
+    <div class="orderManage baseMargin" style="display: block;">
+        <div class="baseMargin">고객요구사항</div>
+        <div class="baseMargin" style="background-color: #e7e7e7; padding: 1%; color:#999999;">내용이 없습니다.</div>
+        <div class="baseMargin">예약변경요청</div>
+        <th:block th:if="${orderModify != 'null'}">
+            <div style="display: flex;margin: 0;padding: 1%;background-color: #e7e7e7;">
+                <div style="margin-right: 5%">
+                    <div>
+                        <a style="margin-right: 50%;">수령일</a>
+                        <a>반납일</a>
+                    </div>
+                    <div>
+                        <a>2023.1.17</a>
+                        <a class="intendMargin"></a>
+                        <a>2023.1.19</a>
+                    </div>
+                </div>
+                <div style="margin-right: 5%">
+                    <div class="intendMargin" style="margin-top:20%">→</div>
+                </div>
+                <div style="margin-right: 5%">
+                    <div>
+                        <a style="margin-right: 50%;">수령일</a>
+                        <a>반납일</a>
+                    </div>
+                    <div>
+                        <a>2023.1.17</a>
+                        <a class="intendMargin"></a>
+                        <a>2023.1.19</a>
+                    </div>
+                </div>
+                <div style="margin-left: 30%">
+                    <img type="button" src="img/adminDashacceptBtn.png" class="buttonMargin">
+                    <img type="button" src="img/adminDashRejectBtn.png" class="buttonMargin">
+                </div>
+            </div>
+        </th:block>
+        <th:block th:if="${orderModify=='null'}">
+            <div class="baseMargin" style="background-color: #e7e7e7; padding: 1%; color:#999999;">내용이 없습니다.</div>
+        </th:block>
+
+
+        <div class="baseMargin">배송현황</div>
+        <div class="baseMargin">
+            <table>
+                <tr>
+                    <th>트럭번호</th>
+                    <th>위치</th>
+                    <th>날짜</th>
+                    <th>시간</th>
+                    <th>배송 진행상황</th>
+
+                </tr>
+                <tr>
+                    <td>가2345</td>
+                    <td>2:25</td>
+                    <td>2023.01.02</td>
+                    <td>12:32</td>
+                    <td>00지점에서 주문을 접수했습니다. 제품을 준비합니다.</td>
+                </tr>
+            </table>
+        </div>
+        <div style="text-align: right; margin: 24px">
+            <img style="margin-right: 24px; height: 40px;" src="img/adminDashCanclebtn.png">
+            <img style="height: 40px;" src="img/adminDashSaveBtn.png">
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

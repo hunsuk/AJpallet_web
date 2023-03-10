@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>아주렌탈</title>
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .customoverlay {
+            position: relative;
+            bottom: 85px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            border-bottom: 2px solid #ddd;
+            float: left;
+        }
+
+        .customoverlay:nth-of-type(n) {
+            border: 0;
+            box-shadow: 0px 1px 2px #888;
+        }
+
+        .customoverlay a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            background: #d95050;
+            background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+        }
+
+        .customoverlay .title {
+            display: block;
+            text-align: center;
+            background: #fff;
+            margin-right: 35px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .customoverlay:after {
+            content: '';
+            position: absolute;
+            margin-left: -12px;
+            left: 50%;
+            bottom: -12px;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+        }
+
+        .customSelect {
+            position: relative;
+        }
+
+        .customSelect select {
+            display: none;
+        }
+
+
+        #outcircle {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 500px;
+            height: 60px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        #outcircle2 {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 150px;
+            height: 60px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        #incircle {
+            margin: auto;
+            text-align: left;
+        }
+        #buttonReset {
+            margin-left: 84px;
+            background-color: #E52415;
+            color: #FFF;
+            border: none;
+        }
+
+        #vLine {
+            border-left: thick solid #808080;
+            height: 50px;
+            margin-left: 32px;
+            margin-right: 32px;
+
+        }
+
+        .KmButton {
+            text-align: center;
+            padding-left: 50px;
+            padding-right: 50px;
+            margin-right: auto;
+            background-color: #fff;
+        }
+
+        .myAjStatus {
+            margin: 10px;
+        }
+
+
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+        }
+
+        .custom-select select {
+            display: none; /*hide original SELECT element:*/
+        }
+
+        .select-selected {
+            background-color: none;
+
+        }
+
+        /*style the arrow inside the select element:*/
+        .select-selected:after {
+            content: "";
+            top: 20px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            margin-left: 50px;
+            border: 6px solid transparent;
+            border-color: #e60808 transparent transparent transparent;
+        }
+
+        /*point the arrow upwards when the select box is open (active):*/
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #e60808 transparent;
+
+        }
+
+        /*style the items (options), including the selected item:*/
+        .select-items div, .select-selected {
+            padding: 8px 40px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        /*style items (options):*/
+        .select-items {
+            position: absolute;
+            background-color: #fff;
+
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+
+        /*hide the items when the select box is closed:*/
+        .select-hide {
+            display: none;
+        }
+        .select-items div:hover, .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05c5c3dffff5e6bd1c413734dd5a4a0e"></script>
+
+</head>
+<body class="AZ-font" id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container px-4">
+        <img class="navbar-brand" style="width: 4%; height: 4%;" src="img/index.png"/>
+        <a class="navbar-brand" href="#page-top">AJ렌탈</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-link"><a href="#" onclick="location.href='/myPage'"
+                                        style="text-decoration-line: none; color: #fff;">내정보</a></li>
+                <li class="nav-link"><span th:text="${userName}"
+                                           style="text-decoration-line: none; color: #fff;">님</span></li>
+                <li class="nav-link">
+                    <form id="logout" action="/logout" method="POST">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="submit"
+                               style="text-decoration-line: none; color: #fff; background-color: transparent; border: 0;"
+                               value="로그아웃"/>
+                        <br></form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-primary text-white"
+        style="background-image: url('img/main1.jpg');filter: blur(0px) brightness(80%); padding-top: 10rem; padding-bottom: 10rem;">
+    <div class="container px-4 text-center">
+        <h1 class="fw-bolder">사용 환경에 특화 된 파렛트 렌탈 시스템</h1>
+        <p class="lead">원하는 곳에 필요한 만큼, 대여부터 회수까지 빠르고 편리하게 제공합니다.</p>
+        <img type="button" onclick="location.href='/publish_req'" style="width: 20%; height: 50%; margin-right: 50px;" src="img/palletRentalButton.png">
+        <img type="button" onclick="location.href='/check_my_request'" style="width: 20%; height: 50%" src="img/checkOrderButton.png">
+
+        <a class="btn btn-lg btn-light" href="control_request" th:if="${userAuth!='ROLE_USER'}">주문 관리하러 가기!</a>
+        <a class="btn btn-lg btn-light" href="/dashboard_admin" th:if="${userAuth!='ROLE_USER'}">대시보드 보러 가기!</a>
+    </div>
+</header>
+<!-- About section-->
+<section id="about" style="padding-top: 80px">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-lg-8">
+                <h2>주문현황</h2>
+                <div style="display: inline-block;">
+
+
+                    <div style="display: flex;">
+                        <div id="outcircle">
+                            <input class="incircle"
+                                   id="inputData"
+                                   style="border: none; margin-left: 20px;margin-top: 5px;margin-bottom: 5px; outline: none;"
+                                   placeholder='검색할 것을 입력해주세요'><img type="button" onclick="onClickFilterButton()" src="img/searchIcon.png" style="margin-left:60px;">
+                        </div>
+                        <div id="outcircle2">
+                            <div id="incircle">
+                                <div class="custom-select" style="width:auto;">
+                                    <select id="selectType">
+                                        <option value="0">전체</option>
+                                        <option value="1">파렛트</option>
+                                        <option value="2">트럭</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="buttonReset" onclick="FilterInitMap();clickUnRangeButton();">변경초기화</button>
+                    </div>
+
+                    <hr style=" opacity: 1;border: 2px solid #E52415;"/>
+
+                    <div style="display: flex; margin:15px;">
+                        <spen>반경 설정<br/>
+                            <a style="color: #E52415">Radius Setting</a>
+                        </spen>
+                        <div id="vLine"></div>
+                        <button class="KmButton" onclick="preKmButtonUnCheck(this.id);clickKmButton(this.id);" id="10km" style="border: 1px solid #c8c8c8c8;color: #767676;">10Km</button>
+                        <button class="KmButton" onclick="clickKmButton(this.id);" id="10km2" style="display: none; border: 1px solid #E52415;color: #E52415;">10Km</button>
+                        <button class="KmButton" onclick="preKmButtonUnCheck(this.id);clickKmButton(this.id);" id="20km" style="border: 1px solid #c8c8c8c8;color: #767676;">20Km</button>
+                        <button class="KmButton" onclick="clickKmButton(this.id);" id="20km2" style="display: none; border: 1px solid #E52415;color: #E52415;">20Km</button>
+                        <button class="KmButton" onclick="preKmButtonUnCheck(this.id);clickKmButton(this.id);" id="30km" style="border: 1px solid #c8c8c8c8;color: #767676;">30Km</button>
+                        <button class="KmButton" onclick="clickKmButton(this.id);" id="30km2" style="display: none; border: 1px solid #E52415;color: #E52415;">30Km</button>
+                        <script>
+                            var perClickButton = "";
+                            function clickKmButton(button_id){
+
+                                var km1 = document.getElementById(button_id);
+                                var km2 = '0';
+                                var km  = button_id.slice(0,2) * 1000;
+                                if(km1.id.at(-1) == 'm'){
+                                    km2 = document.getElementById(button_id +'2');
+                                    console.log(1);
+                                    clickRangeButton(km);
+                                }else{
+                                    console.log(2);
+                                    clickUnRangeButton()
+                                    km2 = document.getElementById(button_id.slice(0,button_id.length - 1));
+                                    perClickButton = "";
+                                }
+
+                                if(km1.style.display=='none'){
+                                    km1.style.display = 'block';
+                                    km2.style.display = 'none';
+                                }else{
+                                    km1.style.display = 'none';
+                                    km2.style.display = 'block';
+                                }
+                            }
+                            function preKmButtonUnCheck(button_id){
+                                if (perClickButton != ""){
+                                    clickKmButton(perClickButton);
+                                    perClickButton = button_id +'2';
+                                }else{
+                                    perClickButton = button_id +'2';
+                                }
+                            }
+                        </script>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        <div style="background-color:#e7e7e7; color:#999999">
+                            <img src="img/missingIcon.png"> <span class="myAjStatus" style="color: #999999">분실물</span>
+                            <img src="img/sendingIndexIcon.png"> <span class="myAjStatus"
+                                                                       style="color: #999999">현재배달위치</span>
+                            <img src="img/myIndexIcon.png"> <span class="myAjStatus" style="color: #999999">내위치</span>
+                            <img src="img/nearShopIcon.png"> <span class="myAjStatus" style="color: #999999">근처지점</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div id="map" style="height:600px; margin-top: 10px; margin-bottom: 150px;"></div>
+                <script type="text/javascript" src="js/kakao_index_tmp.js"></script>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="py-5 bg-dark">
+    <div class="container px-4"><p class="m-0 text-center text-white">05836 서울특별시송파구정의로 8길 9 AJ빌딩</p>
+        <div class="container px-4"><p class="m-0 text-center text-white">대표전화 1588-0053</p>
+            <div class="container px-4"><p class="m-0 text-center text-white">Copyright AJ Networks Corporation. All
+                rights reserved.</p>
+            </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+
+
+
+<script>
+    var x, i, j, l, ll, selElmnt, a, b, c;
+    /*look for any elements with the class "custom-select":*/
+    x = document.getElementsByClassName("custom-select");
+    l = x.length;
+    for (i = 0; i < l; i++) {
+        selElmnt = x[i].getElementsByTagName("select")[0];
+        ll = selElmnt.length;
+        /*for each element, create a new DIV that will act as the selected item:*/
+        a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x[i].appendChild(a);
+        /*for each element, create a new DIV that will contain the option list:*/
+        b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
+        for (j = 0; j < ll; j++) {
+            /*for each option in the original select element,
+            create a new DIV that will act as an option item:*/
+            c = document.createElement("DIV");
+            c.innerHTML = selElmnt.options[j].innerHTML;
+            c.addEventListener("click", function (e) {
+                /*when an item is clicked, update the original select box,
+                and the selected item:*/
+                var y, i, k, s, h, sl, yl;
+                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                sl = s.length;
+                h = this.parentNode.previousSibling;
+                for (i = 0; i < sl; i++) {
+                    if (s.options[i].innerHTML == this.innerHTML) {
+                        s.selectedIndex = i;
+                        h.innerHTML = this.innerHTML;
+                        y = this.parentNode.getElementsByClassName("same-as-selected");
+                        yl = y.length;
+                        for (k = 0; k < yl; k++) {
+                            y[k].removeAttribute("class");
+                        }
+                        this.setAttribute("class", "same-as-selected");
+                        break;
+                    }
+                }
+                h.click();
+            });
+            b.appendChild(c);
+        }
+        x[i].appendChild(b);
+        a.addEventListener("click", function (e) {
+            /*when the select box is clicked, close any other select boxes,
+            and open/close the current select box:*/
+            e.stopPropagation();
+            closeAllSelect(this);
+            this.nextSibling.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+        });
+    }
+
+    function closeAllSelect(elmnt) {
+        /*a function that will close all select boxes in the document,
+        except the current select box:*/
+        var x, y, i, xl, yl, arrNo = [];
+        x = document.getElementsByClassName("select-items");
+        y = document.getElementsByClassName("select-selected");
+        xl = x.length;
+        yl = y.length;
+        for (i = 0; i < yl; i++) {
+            if (elmnt == y[i]) {
+                arrNo.push(i)
+            } else {
+                y[i].classList.remove("select-arrow-active");
+            }
+        }
+        for (i = 0; i < xl; i++) {
+            if (arrNo.indexOf(i)) {
+                x[i].classList.add("select-hide");
+            }
+        }
+    }
+
+    /*if the user clicks anywhere outside the select box,
+    then close all select boxes:*/
+    document.addEventListener("click", closeAllSelect);
+</script>
+</body>
+</html>

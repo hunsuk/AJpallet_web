@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <META HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+    <script>
+        window.onpageshow = function (event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+                // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+                window.location.replace("/");
+            }
+        }
+    </script>
+
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+
+
+        .navbar{
+            width: 100%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            background-color: #212529;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+    </style>
+
+    <title>login</title>
+</head>
+<body class="AZ-font" id="page-top">
+<div class="navbar">
+    <img src="img/index.png" style="width: 2%; height: 2%;">
+</div>
+<div class="container2">
+
+    <div class="login-box2">
+        <p style="font-size: 240%;"><a style="color: #E52415;  font-weight: bold">My AJ</a><a style="font-weight: bold;"> 로그인</a></p>
+<!--        <span text="고객전용" style="font-size: 20px; text-align: center; margin-bottom: 42px;"></span>-->
+        <form class="login" action="/login" method="POST">
+
+            <div class="form-group" style="margin-bottom: 24px; margin-top: 42px">
+                <input type="text" placeholder="아이디를 입력해주세요" id="username" name="username" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="비밀번호를 입력해주세요" id="password" name="password" class="form-control">
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+                <label for="rememberme">
+                    <input type="checkbox" name="rememberme" id="rememberme">
+                    아이디 저장
+                </label>
+            </div>
+            <div class="form-group" style="margin-bottom: 24px; margin-top: 42px">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button class="full-btn" type="submit" style="font-weight: bold">로그인</button>
+            </div>
+            <div class="form-group" style="margin-bottom: 42px; text-align: center">
+                <p><a>아이디 찾기</a> | <a>비밀번호 찿기</a></p>
+            </div>
+            <div class="form-group" style="text-align: center">
+                <p>아직 계정이 없으신가요? <a href="/signup" style="color: #E52415">회원가입</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

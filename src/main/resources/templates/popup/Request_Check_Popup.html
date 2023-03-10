@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/modal/fonts/icomoon/style.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/modal/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/modal/style.css">
+
+    <title>예약 상세 정보</title>
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            background-color: #e7e7e7;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: both;
+        }
+
+        .customSelect select {
+            display: none;
+        }
+
+        .myAjStatus {
+            margin: 10px;
+        }
+
+        .myAjStatus2 {
+            border-right: 2px solid #e7e7e7;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        hr {
+            height: 2px;
+            background-color: #E52415;
+        }
+
+        .custom-select select {
+            display: none; /*hide original SELECT element:*/
+        }
+
+
+        .select-items div, .select-selected {
+            padding: 8px 40px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        .select-items div:hover, .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+</head>
+<body class="AZ-font" style="margin:20px">
+<div style="display: inline-block;">
+    <h1 style="margin-top:52px;margin-bottom:32px;">예약 상세 정보 </h1>
+    <div style="background-color:#E7E7E7;
+    border-top: 2px solid #767675;
+    border-bottom: 2px solid #767675; text-align:left; padding-top: 20px; padding-bottom: 20px">
+        <a class="myAjStatus" style="margin-left:5%; margin-right:5%;">예약 상세 정보</a>
+        <a class="myAjStatus" style="margin-left:9%; margin-right:5%;">수량</a>
+        <a class="myAjStatus" style="margin-left:5%; margin-right:5%;">판매가</a>
+        <a class="myAjStatus" style="margin-left:8%; margin-right:5%;">시작일</a>
+        <a class="myAjStatus" style="margin-left:10%; margin-right:5%;">반납일</a>
+    </div>
+    <div>
+        <div id="intent"></div>
+<!--        <div style="padding-top:20px;padding-bottom:20px; border-bottom:2px solid #e7e7e7;">-->
+<!--            <a class="myAjStatus2" style="padding-left:2.5%;padding-right:2.5%;">11</a>-->
+<!--            <a class="myAjStatus2" style="padding-right:15%; border-right:2px solid #e7e7e7">파렛트 A 11</a>-->
+<!--            <a class="myAjStatus2" style="padding-left:5%; padding-right:5%;">11</a>-->
+<!--            <a class="myAjStatus2" style="padding-left:5%; padding-right:5%;">13,000</a>-->
+<!--            <a class="myAjStatus2" style="padding-left:5%; padding-right:5%;">23.01.09</a>-->
+<!--            <a class="myAjStatus2" style="padding-left:5%;padding-right:5%; border-right:none">23.01.09</a>-->
+<!--        </div>-->
+
+
+        <h3> 고객 요구사항 </h3>
+        <textarea rows="5" cols="100%" name="contents" placeholder="내용이없습니다. 입력하시겠습니까?"></textarea>
+        <div style="text-align:right; margin-top:32px;">
+            <img style="height: 45px; margin-right: 24px" src="img/reservationModifyButton.png"></img>
+            <img type="button" onclick="sendDelReservation()" style="height: 45px;" src="img/reservationCanselButton.png"></img>
+        </div>
+    </div>
+    <script>
+        const url = new URL(window.location.href);
+        const urlParameter = url.searchParams;
+        var intent = document.getElementById("intent");
+        var input = "";
+        var id = urlParameter.get('id');
+        var orderInfo = urlParameter.get('orderInfo');
+        var startDay = urlParameter.get('start').replace(/-/gi, ',');
+        var endDay = urlParameter.get('end').replace(/-/gi, ',');
+        var orders = orderInfo.split(",")
+
+        for (var i = 0; i < orders.length; i++) {
+            order = orders.at(i).split(" ");
+            input += "<div style=\"padding-top:20px;padding-bottom:20px; border-bottom:2px solid #e7e7e7;\">"
+            input += "<a class=\"myAjStatus2\" style=\"padding-right:4%; padding-right:15%;border-right:2px solid #e7e7e7\">파렛트" + order.at(0).slice(0, order.at(0).length-1) + "</a>\n";
+            input += "<a class=\"myAjStatus2\" style=\"padding-left:5%; padding-right:5%;\">" + order.at(1).slice(0, order.at(1).length-1) + "</a>\n";
+            input += "<a class=\"myAjStatus2\" style=\"padding-left:5%; padding-right:5%;\">13,000</a>\n";
+            input += "<a class=\"myAjStatus2\" style=\"padding-left:5%; padding-right:5%;\">" + startDay + "</a>\n";
+            input += "<a class=\"myAjStatus2\" style=\"padding-left:5%;padding-right:5%; border-right:none\">" + endDay + "</a></div>";
+            if ( i ==orders.length -1){
+                intent.innerHTML = input;
+            }
+        }
+        console.log(input)
+        console.log(id);
+        console.log(orderInfo);
+        console.log(startDay);
+        console.log(endDay);
+
+        function sendDelReservation(){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === xhr.DONE) {
+                    if (xhr.status === 200 || xhr.status === 201) {
+                        window.opener.calendar.getEventById(id).remove()
+                        window.close()
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                }
+            };
+            xhr.open('GET','http://20.39.194.142:8080/delReservation?id='+id);
+            // xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.send();
+
+        }
+    </script>
+
+</body>
+
+</html>

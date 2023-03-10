@@ -1,0 +1,612 @@
+/* Import Locla CSS */
+@import url('reset.css');
+@import url('variables.css');
+
+*{
+    font-family: var(--primary-kr);
+    font-weight: 300;
+}
+
+
+body{
+    margin: 0;
+    color: var(--dark-black);
+    line-height: 1.5em;
+    font-size: 14px;
+}
+/* #### Common CSS #### */
+
+/* Layout CSS */
+.container{
+    width: 100%;
+    position: relative;
+}
+
+.preloading,
+.signup,
+.login,
+.cart,
+.main{
+    height: 100vh;
+    border: none;
+}
+
+
+/* Logo CSS */
+.logo{
+    font-family: var(--primary-en);
+}
+
+.logo-content{
+    text-align: center;
+}
+.logo-content .title{
+    color: #FFF;
+    font-weight:bold;
+}
+.logo-content .sub-title{
+    color: #FFF;
+    font-weight:bold;
+    filter: brightness(80%);
+}
+
+
+.icon{
+    width: 20%;
+    display: block;
+    margin: auto;
+}
+
+.btn-primary{
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    color: #FFF;
+    width: 100%;
+    padding: 8px;
+}
+/* Input field */
+.input-field input{
+    border: 2px solid var(--red);
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 30px;
+    margin: 5px 0;
+}
+.input-field input:focus{
+    border-color: var(--light-red);
+}
+.input-field input::placeholder{
+    font-weight: 500;
+}
+
+/* #### Preloading CSS #### */
+
+.preloading-inner{
+    height: inherit;
+    background: url("/img/mobile/main1.jpg") center right -250px;
+    background-size: cover;
+    position: relative;
+    filter: brightness(80%);
+
+}
+.preloading-icon{
+    padding-top: 25%;
+    padding-bottom: 20%;
+}
+.preloading-content{
+    text-align: center;
+}
+
+/* #### Login CSS #### */
+
+
+.login-header{
+    background: url("/img/mobile/main1.jpg") center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: brightness(80%);
+    height: 30vh;
+}
+
+.login-content{
+    padding: 20px;
+    text-align: center;
+    height: 30vh;
+}
+
+
+.input-option{
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-option label input[type=checkbox]{
+    display: none;
+}
+
+.input-option label input + em{
+    /* border: 1px solid #000; */
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    transform: translateY(4px);
+    margin-right: 3px;
+}
+
+.input-option label input + em::before{
+    content: '\F26B';
+    font-family: bootstrap-icons;
+    font-style: normal;
+    color: var(--dark-gray);
+    transform: translateY(-2px);
+    display: inline-block;
+}
+.input-option label input[type=checkbox]:checked + em::before{
+    color: var(--red);
+}
+.btn-signin{
+    background-color: var(--red);
+}
+.join-member{
+    margin: 15px 0;
+}
+.join-member a{
+    text-decoration: underline;
+    margin-left: 5px;
+}
+
+.gnb{
+    border-top: 1px solid var(--bright-gray);
+
+    display: flex;
+    justify-content: space-between;
+    height: 65px;
+    width: 100%;
+    background-color: #FFF;
+    /* transform: translateY(120px); */
+    bottom: 0;
+    position: fixed;
+}
+
+.gnb a {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.gnb span {
+    display: block;
+
+}
+.gnb a .bi{
+    font-size: 22px;
+}
+.gnb a:nth-child(2) .bi{
+    font-size: 26px;
+}
+.gnb a span {
+    font-size: 13px;
+}
+
+/* #### Signup CSS ####*/
+.container.signup{
+    position: relative;
+    background-color: var(--white-gary);
+}
+.signup-header{
+    display: flex;
+}
+
+.signup-header img{
+    width: 15%;
+    margin: 10px 0 10px auto;
+}
+
+.signup-header h2{
+    display: block;
+    margin: auto auto auto 5px;
+    font-size: 45px;
+}
+
+.signup-conent{
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-conent input{
+    margin: 10px 0;
+    padding: 3vh;
+    border: 1px solid var(--light-gray);
+    border-radius: 30px;
+}
+
+.signup-conent input:focus{
+    border-color: var(--red);
+}
+
+.btn-signup{
+    background-color: var(--red);
+    margin: 10px 0;
+    transform: translateY(20px);
+}
+
+/* #### cart CSS #### */
+.container.cart{
+    height: 750px;
+    border: none;
+}
+
+.page-header{
+    display: flex;
+    font-family: var(--primary-en);
+    background-color: var(--red);
+    padding: 13px;
+    margin-bottom: 32px;
+    align-items: center;
+    color: #FFF;
+    font-weight: 700;
+}
+
+.page-header a{
+    font-size: 20px;
+    transform: translateY(-8px);
+    justify-content: left;
+    margin-right: 30%;
+}
+.page-header h2{
+    position: absolute;
+    left: 45%;
+}
+
+.cart-content{
+    padding: 13px;
+}
+
+.cart-title{
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    font-size: 1.2em;
+    margin-bottom: 32px;
+}
+
+
+.cart-title a{
+    color: #FFF;
+    padding: 2px 5px;
+    background-color: var(--gray);
+    border-radius: 10px;
+}
+
+.cart-item{
+    border-bottom: 1px solid var(--bright-gray);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+.item-intent{
+    margin-bottom: 32px;
+}
+
+.item-list{
+    padding: 0 0 50px 0;
+}
+.item-intent div{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.item-intent input{
+    zoom: 1.5;
+    transform: translateY(-2px)
+}
+.item-intent span{
+    margin: 0 0 0 28px;
+}
+
+.item-intent-sub img{
+    width: 20%;
+    margin-right: 12px;
+    transform: translateY(-35px);
+    z-index: -1;
+
+}
+.item-intent-sub{
+    display: flex;
+}
+
+.item-field > .input-date a{
+    padding-right: 8px;
+}
+.item-field select{
+    padding: 0 20px;
+    background-color: var(--bright-gray);
+}
+.item-field p{
+    color: var(--light-gray);
+}
+.cost-intent{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-buy{
+    background-color: var(--red);
+    font-weight: 400;
+}
+
+
+/* #### mypage CSS #### */
+
+.container.mypage{
+    height: 750px;
+
+}
+.mypage-inner > span{
+    margin: 12px;
+    font-weight: bold;
+}
+
+.myinfo{
+    display: flex;
+    margin: 12px;
+}
+.myinfo > .my-img{
+    flex:1
+}
+.myinfo > .my-info{
+    flex:4
+}
+.my-img{
+    transform: translateY(10px);
+}
+
+.my-img > a{
+    font-size: 30px;
+    border: 1px solid #000;
+    border-radius: 40px;
+}
+
+.my-grade{
+    display: flex;
+    justify-content: space-between;
+}
+
+.my-grade > span{
+    color: green;
+    font-weight: bold;
+}
+
+.my-grade > a{
+    font-size: 32px;
+}
+
+.my-company{
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0;
+    padding: 3px;
+    border-radius: 13px;
+    width: 60%;
+    background-color: var(--bright-gray);
+}
+
+.my-company span{
+    font-weight: 500;
+}
+
+.my-company a{
+    color: blue;
+    font-weight: 300;
+}
+
+.deliver-item{
+    margin: 12px;
+    border: 1px solid var(--bright-gray);
+    display: flex;
+}
+
+.deliver-item > img{
+    width: 10%;
+}
+
+.deliver-item > .input-dates{
+    transform: translateY(15px);
+}
+
+.mypage-service{
+    margin: 12px;
+}
+
+.service-content{
+    border-bottom: 1px solid var(--bright-gray);
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-logout{
+    background-color: var(--light-gray);
+    font-weight: 500;
+}
+
+/* #### item CSS #### */
+
+.item-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 12px;
+}
+.header-text{
+    display: flex;
+    z-index: 2;
+}
+
+.header-text > a{
+    padding-right: 32px;
+    font-size: 24px;
+}
+
+.header-text > h2{
+
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.header-icon{
+    z-index: 2;
+}
+
+.header-icon > a{
+    font-size: 24px;
+}
+
+.item-img{
+    width: 100%;
+
+}
+.item-img img{
+    width: 100%;
+    z-index: 1;
+    transform: translateY(-50px);
+}
+
+.item-info{
+    display: flex;
+    flex-direction: column;
+    margin: 12px;
+    z-index: 2;
+    transform: translateY(-100px);
+}
+
+.item-info span{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.item-cost-count{
+    display: flex;
+    justify-content: right;
+    margin-top: 12px;
+}
+
+.item-cost-count h2{
+    padding-right: 12px;
+}
+
+.item-cost-deliver{
+    display: flex;
+    justify-content: right;
+    margin-top: 12px;
+}
+
+.item-btns{
+    display: flex;
+    justify-content: center;
+    transform: translateY(60px);
+}
+
+.item-btns button{
+    margin: 12px;
+    padding: 8px 32px;
+    flex: 1;
+
+}
+
+.get-cart-btn{
+    background-color: #FFF;
+    border: 1px solid blue;
+    color: blue;
+    border-radius: 8px;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.buy-cart-btn{
+    background-color: blue;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 16px;
+
+}
+
+/* #### main CSS #### */
+
+
+
+.main-goto{
+    display: flex;
+    margin:  0px 12px 12px;
+    text-align: center;
+    font-size: 1vh;
+    z-index: 2;
+}
+
+.main-header{
+    margin-bottom: 12px;
+}
+.main-map{
+    height: 40vh;
+}
+
+.main-goto span{
+    flex: 1;
+    font-weight: 500;
+}
+
+.main-goto > .home{
+    color: red;
+}
+
+.item-type{
+    background-color: bisque;
+    padding: 12px;
+    text-align: center;
+    font-size: 1vh;
+}
+
+.item-type span{
+    margin: 16px;
+}
+
+.item-type-img img{
+    width: 50%;
+}
+
+.main-item{
+    margin: 12px;
+    border: 1px solid var(--bright-gray);
+    display: flex
+}
+
+.item-type-img{
+    flex: 1;
+}
+
+.item-type-content{
+    flex: 2;
+    transform: translateY(20px);
+}
+
+.footer{
+    background-color: var(--bright-gray);
+    padding: 12px;
+}
+.footer-goto{
+    margin: 8px 0;
+}
+
+
+.footer-goto a{
+    padding: 0px 8px;
+}
+
+.co-info h3{
+    margin-bottom: 32px;
+}

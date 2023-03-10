@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="www.thymeleaf.org"
+      lang='kr'>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>아주렌탈</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/customCalendar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        #external-events {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: 150px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            background: #eee;
+            text-align: left;
+        }
+
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+        }
+
+        #external-events .fc-event {
+            margin: 3px 0;
+            cursor: move;
+        }
+
+        #external-events p {
+            margin: 1.5em 0;
+            font-size: 11px;
+            color: #666;
+        }
+
+        #external-events p input {
+            margin: 0;
+            vertical-align: middle;
+        }
+
+        #calendar-wrap {
+            /*margin-left: 200px;*/
+        }
+
+        #calendar {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        hr{
+            size: 20px;
+            margin-bottom: 5%;
+        }
+        #outcircle {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 500px;
+            height: 60px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        #incircle {
+            margin: auto;
+            text-align: left;
+        }
+        #selectType button{
+            padding-left: 65px;
+            padding-right: 65px;
+            font-size: 19px;
+            margin: 10px;
+            border: 2px solid #c8c8c8;
+            color: #c8c8c8;
+            background: none;
+        }
+    </style>
+    <script type="text/javascript">
+        var processEvent = new Array();;
+        var calendar;
+        document.addEventListener('DOMContentLoaded', function() {
+
+            /* initialize the external events
+            -----------------------------------------------------------------*/
+
+            var containerEl = document.getElementById('external-events-list');
+            new FullCalendar.Draggable(containerEl, {
+                itemSelector: '.fc-event',
+                eventData: function(eventEl) {
+                    return {
+                        title: eventEl.innerText.trim(),
+                        color: eventEl.firstElementChild.attributes.item(1).value
+
+                    }
+                },
+
+            });
+
+
+            var calendarEl = document.getElementById('calendar');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                firstDay: 1,
+                headerToolbar: {
+                    left: '',
+                    center: 'prev title next',
+                    right: ''
+                },
+
+                editable: true,
+                droppable: true, // this allows things to be dropped onto the calendar
+
+                eventClick: function(arg) {
+                    if(processEvent.indexOf(arg.event._def.defId)!=-1){
+                        return;
+                    }
+                    window.name = "parentForm";
+                    var start = arg.event._instance.range.start.toString().split(' ')
+                    var end = arg.event._instance.range.end.toString().split(' ')
+
+                    var sYear = start[3];
+                    var sDay = start[2];
+                    var sMonth = changeMonth(start[1]);
+
+                    var eYear = end[3];
+                    var eDay = end[2];
+                    var eMonth = changeMonth(end[1]);
+
+                    var eventID = arg.event._def.defId
+
+                    var sendStart = sYear +' ' + sMonth + ' ' + sDay;
+                    var sendEnd = eYear +' ' + eMonth + ' ' + eDay;
+
+
+
+                    var url= "/request_popup?item=" + arg.event._def.title + "&start=" + sendStart + "&end=" + sendEnd + "&id="+eventID;    //팝업창에 출력될 페이지 URL
+                    var winWidth = 700;
+                    var winHeight = 600;
+                    var popupX = (window.screen.width / 2) - (winWidth / 2);
+
+                    var popupY= (window.screen.height / 2) - (winHeight / 2);
+
+                    var popupOption= "width="+winWidth+", height="+winHeight+", left="+popupX + ", top="+popupY;    //팝업창 옵션(optoin)
+
+
+                    var myWindow = window.open(url,"childForm",popupOption);
+
+
+
+                    calendar.render();
+
+                },
+                drop: function(arg) {
+                    // is the "remove after drop" checkbox checked?
+                    if (document.getElementById('drop-remove').checked) {
+                        // if so, remove the element from the "Draggable Events" list
+                        arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+                    }
+                }
+
+            });
+            calendar.render();
+        });
+        window.call = function (eventId){
+            eventId = eventId;
+            var event
+            processEvent.push(eventId);
+            for (var i =0; i < calendar.getEvents().length; i++){
+                if (calendar.getEvents()[i]._def.defId == eventId){
+                    event = calendar.getEvents()[i];
+                }
+            }
+            event.setProp("borderColor","gray");
+            event.setProp("backgroundColor","gray");
+            event.setProp("editable",false);
+            console.log(event);
+            console.log("inner setProcessEvent");
+        }
+
+        function changeMonth(month){
+            let data;
+
+            switch (month){
+                case 'Jan':
+                    data = 1;
+                    break;
+                case 'Feb':
+                    data = 2;
+                    break;
+                case 'Mar':
+                    data = 3;
+                    break;
+                case 'Apr':
+                    data = 4;
+                    break;
+                case 'May':
+                    data = 5;
+                    break;
+                case 'Jun':
+                    data = 6;
+                    break;
+                case 'Jul':
+                    data = 7;
+                    break;
+                case 'Aug':
+                    data = 8;
+                    break;
+                case 'Sep':
+                    data = 9;
+                    break;
+                case 'Oct':
+                    data = 10;
+                    break;
+                case 'Nov':
+                    data = 11;
+                    break;
+                case 'Dec':
+                    data = 12;
+                    break;
+            }
+            return data;
+        }
+        function popupOpen(){
+            var url= "/RequestPopup";    //팝업창에 출력될 페이지 URL
+            var winWidth = 700;
+            var winHeight = 600;
+            var popupX = (window.screen.width / 2) - (winWidth / 2);
+
+            var popupY= (window.screen.height / 2) - (winHeight / 2);
+
+            var popupOption= "width="+winWidth+", height="+winHeight+", left="+popupX + ", top="+popupY;    //팝업창 옵션(optoin)
+            var myWindow = window.open(url,"TestName",popupOption);
+            myWindow.document.write("<h1>"+myWindow.name+"</h1>");
+        }
+
+
+
+
+
+        <!-- 파렛트 상품 리스트 -->
+        var itemAry = [];
+
+        window.onbeforeunload = function() {
+            console.log(itemAry.toString());
+            if(itemAry.length !=0){
+                console.log(itemAry.toString());
+                const request = new XMLHttpRequest();
+                // 2. 요청 초기화
+                request.open('GET', '/setBuket?items='+itemAry.toString(), true);
+                // 3. 요청 전송
+                request.send();
+            }
+        };
+
+
+        <!-- 해당 파렛트 장바구니 담기     -->
+        function getCart(event){
+            let type = event.target.value;
+            var doc_type = document.getElementById(type);
+            var cart_number = document.getElementById("cart_number");
+            var cart_items = document.getElementById("input_items");
+            itemAry.push(type);
+
+            doc_type.style.display = 'none';
+            doc_type = document.getElementById(type + 1);
+
+            doc_type.style.display = '';
+            cart_number.innerText = itemAry.length
+
+            var tem = document.getElementById("tem");
+            var tem2 = document.getElementById("tem2");
+            tem.innerHTML = "<INPUT TYPE='text 'style='display : none;' ID='select_pallet' NAME='select_pallet' VALUE = '" + itemAry.toString() + "'>"
+            tem2.innerHTML = "<INPUT TYPE='text 'style='display : none;' ID='select_pallet' NAME='select_pallet' VALUE = '" + itemAry.toString() + "'>"
+            console.log(itemAry)
+
+            cart_items.innerHTML = "";
+            for(var i = 0; i < itemAry.length; i++){
+
+                cart_items.innerHTML += "<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' style='background-color: #191919;'>\n" +
+                    "                    <div class='fc-event-main' data-color='#191919'>"+itemAry[i]+"</div>\n" +
+                    "                </div>"
+            }
+        }
+        <!-- 해당 파렛트 장바구니 담기 취소 -->
+        function delCart(event){
+            let type = event.target.value;
+            var doc_type_del = document.getElementById(type);
+            var cart_items = document.getElementById("input_items");
+
+            itemAry.splice(itemAry.indexOf(type.substr(0,3)),1);
+            doc_type_del.style.display= 'none';
+            console.log(type.substr(0, type.length))
+            doc_type_in = document.getElementById(type.substr(0, type.length - 1));
+            doc_type_in.style.display='';
+
+            var cart_number = document.getElementById("cart_number");
+            cart_number.innerText = itemAry.length
+
+            var tem = document.getElementById("tem");
+            var tem2 = document.getElementById("tem2");
+            tem.innerHTML = "<INPUT TYPE='text' style='display : none;' ID='select_pallet' NAME='select_pallet' VALUE = '" + itemAry.toString() + "'>"
+            tem2.innerHTML = "<INPUT TYPE='text' style='display : none;' ID='select_pallet' NAME='select_pallet' VALUE = '" + itemAry.toString() + "'>"
+
+            cart_items.innerHTML = "";
+            for(var i = 0; i < itemAry.length; i++){
+
+                cart_items.innerHTML += "<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' style='background-color: #191919;'>\n" +
+                    "<div class='fc-event-main' data-color='#191919'>"+itemAry[i]+"</div>\n" +
+                    "</div>"
+            }
+        }
+        function sendPalletRequest(){
+
+        }
+    </script>
+    <script src='js/fullcalendar/dist/index.global.js'></script>
+</head>
+<body class="AZ-font">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container px-4">
+        <img class="navbar-brand" style="width: 4%; height: 4%;" src="img/index.png"/>
+        <a class="navbar-brand" href="#page-top">AJ렌탈</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+
+            </ul>
+            <form class="d-flex" action="/requestDetail", method="post">
+                <a id="tem"></a>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button class="btn btn-outline-light" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    장바구니
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_number">0</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-primary  text-white" style="background-image: url('img/main1.jpg');filter: blur(0px) brightness(80%); padding-top: 10rem; padding-bottom: 10rem;">
+    <div class="container px-4 text-center">
+        <h1 class="fw-bolder">사용 환경에 특화 된 파렛트 렌탈 시스템</h1>
+        <p class="lead">원하는 곳에 필요한 만큼, 대여부터 회수까지 빠르고 편리하게 제공합니다.</p>
+        <form id="frm" action="/requestDetail" method="post">
+            <a id="tem2"></a>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <img type="submit";  onclick="document.getElementById('frm').submit();" style="width: 20%; height: 50%; margin-right: 50px;" src="img/palletRentalButton.png">
+        </form>
+        <br/>
+    </div>
+</header>
+<!-- Section-->
+
+<section class="sectionSecond">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div style="display: flex; width: 100%;margin-bottom: 3%">
+                <div id="outcircle">
+                    <input class="incircle"
+                           id="inputData"
+                           style="border: none; margin-left: 20px;margin-top: 5px;margin-bottom: 5px; outline: none;"
+                           placeholder='검색할 것을 입력해주세요'><img type="button" onclick="onClickFilterButton()" src="img/searchIcon.png" style="margin-left:60px;">
+                </div>
+                <div style="margin-left: 48%">
+                    <a>오름차순</a><img src="img/palletRequestRangeIcon.png">
+                </div>
+            </div>
+            <hr style="color: #E52415; margin-bottom: 10px;width: 100%;"/>
+            <div style="display: flex; width: 100%; margin-bottom: 3%">
+                <div style=";border-right: 1px solid #c8c8c8;width: 18%; height: 85px; font-size: 1px; transform: translateY(40px)">
+                    <h3>파렛트</h3>
+                    <a style="color: #E52415">Palette</a>
+                </div>
+                <div id="selectType" style="padding: 25px">
+                    <button>전체</button>
+                    <button>표준형</button>
+                    <button>제지용</button>
+                    <button>제병용</button>
+                    <button>전용</button>
+                    <button>목재</button>
+                    <button>사료용</button>
+                    <button>대형</button>
+                    <button>리터너블</button>
+                </div>
+            </div>
+            <div class="col mb-5" th:each="palletItem , index: ${palletItem_list}">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" th:src="${palletItem.img_uri}" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div>
+                            <!-- Product name-->
+                            <div>
+                                <a style="color: #999999" th:text="${palletItem.category}">표준형</a> <a style="color: #999999" th:text="${palletItem.name}">11A형</a> <br>
+                                <div style="font-size: 15px" th:text="${palletItem.size}">규격 1,100mm X 1,100mm X 150mm</div>
+                                <div th:text="${palletItem.weight}">중량 19.5kg</div>
+                            </div>
+                            <hr>
+                            <div>
+                                <a style="color: #E52415">13,000원</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><button class="btn btn-outline-dark mt-auto"  style="width: 80%" onclick="getCart(event); " th:value="${palletItem.front}" th:id = "${palletItem.front}">제품 담기</button></div>
+                        <div class="text-center"><button class="btn btn-outline-dark mt-auto"  onclick="delCart(event); " style='display : none; width: 80%; background-color: #191919; color: #fff;' th:value="${palletItem.front}+1" th:id="${palletItem.front}+1">담기 취소</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">개인정보처리방침 | 고객센터</p></div>
+    <br>
+    <div class="container"><p class="m-0 text-center text-white">05836 서울특별시송파구정의로 8길 9 AJ빌딩</p></div>
+    <div class="container"><p class="m-0 text-center text-white">대표전화 1588-0053</p></div>
+    <div class="container"><p class="m-0 text-center text-white">Copyright AJ Networks Corporation. All rights reserved.</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+
+
+
+
+
+
+</body>
+</html>

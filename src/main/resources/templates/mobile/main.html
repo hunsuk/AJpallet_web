@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="/css/mobile/style.css">
+</head>
+<body>
+<div class="container main">
+    <div class="main-inner">
+        <div class="page-header main-header">
+            <a><i class="bi bi-chevron-left"></i></a>
+            <h2>AJ Pallet</h2>
+        </div>
+        <div class="main-goto">
+            <span class="home" onclick="go_url_home()">홈으로</span>
+            <span onclick="go_url_myPage()">내정보</span>
+            <span>배송확인</span>
+            <span onclick="go_url_cart()">장바구니</span>
+            <span>공지사항</span>
+        </div>
+        <div class="main-map">
+            <div id="map" style="width: 100%;height:100%;"></div>
+        </div>
+
+        <div class="item-type">
+            <span style="color: red;">전체</span>
+            <span>표준형</span>
+            <span>제지용</span>
+            <span>제병용</span>
+            <span>전용</span>
+            <span>목재</span>
+            <span>사료용</span>
+            <span>대형</span>
+            <span>리터너블</span>
+        </div>
+        <div class="item-list">
+            <label onclick="go_url_item()">
+                <div class="main-item">
+                    <div class="item-type-img">
+                        <img src="http://ajnetworks.co.kr/assets/uploads/product/product_11A_1.png" alt="">
+                    </div>
+                    <div class="item-type-content">
+                        <h3>표준형 A11형</h3>
+                        <span>1,100 * 1,100 * 150mm 19.5g</span>
+                        <h3>11,760원</h3>
+                    </div>
+                </div>
+            </label>
+            <div class="main-item">
+                <div class="item-type-img">
+                    <img src="http://ajnetworks.co.kr/assets/uploads/product/product_11A_1.png" alt="">
+                </div>
+                <div class="item-type-content">
+                    <h3>표준형 A11형</h3>
+                    <span>1,100 * 1,100 * 150mm 19.5g</span>
+                    <h3>11,760원</h3>
+                </div>
+            </div>
+            <div class="main-item">
+                <div class="item-type-img">
+                    <img src="http://ajnetworks.co.kr/assets/uploads/product/product_11A_1.png" alt="">
+                </div>
+                <div class="item-type-content">
+                    <h3>표준형 A11형</h3>
+                    <span>1,100 * 1,100 * 150mm 19.5g</span>
+                    <h3>11,760원</h3>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="co-info">
+                <h3>대표전화 1588-0053</h3>
+                <div class="footer-goto">
+                    <a>회사소개</a>
+                    <a>개인정보처리방침</a>
+                    <a>이용약관</a>
+                    <a>공지사항</a>
+                </div>
+                <h3>AJ 네트워크</h3>
+            </div>
+            <div class="co-address">
+                <span>주소: 05836 서울특별시송파구정의로 8길 9 AJ빌딩</span>
+                <span>Copyright AJ Networks Corporation. All rights reserved.</span>
+            </div>
+        </div>
+        <div class="gnb">
+            <a href="#none"><i class="bi bi-truck"></i><span>배송정보</span></a>
+            <a href="#none"><i class="bi bi-person"></i><span>내정보</span></a>
+            <a href="#none"><i class="bi bi-house"></i><span>홈</span></a>
+            <a href="#none"><i class="bi bi-cart"></i><span>장바구니</span></a>
+            <a href="#none"><i class="bi bi-megaphone"></i><span>공지사항</span></a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05c5c3dffff5e6bd1c413734dd5a4a0e"></script>
+<script>
+    var container = document.getElementById('map');
+    var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+    var map = new kakao.maps.Map(container, options);
+</script>
+<script>
+    // var url = "http://localhost:8080";
+    var url = "http://20.39.194.142:8080";
+
+    function go_url_home() {
+        location.href = url + "/test4";
+    }
+
+    function go_url_myPage() {
+        location.href = url + "/test7"; // 페이지 이동...
+    }
+
+    function go_url_cart() {
+        location.href = url + "/test6";
+    }
+
+    function go_url_item(){
+        location.href = url + "/test5";
+    }
+</script>
+</body>
+</html>

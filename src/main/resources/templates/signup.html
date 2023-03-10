@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+    <title>회원가입</title>
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+
+        .navbar {
+            width: 100%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            background-color: #212529;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+    </style>
+
+    </script>
+</head>
+<body>
+<div style="margin-bottom: 42px" class="navbar">
+    <img src="img/index.png" style="width: 2%; height: 2%; ">
+</div>
+<div class="container">
+    <div class="login-box">
+        <form class="login" th:action="@{/user}" method="POST">
+            <p style="font-size: 240%; text-align: center; margin-bottom: 42px"><a
+                    style="color: #E52415;  font-weight: bold">My AJ</a><a
+                    style="font-weight: bold; color: #191919"> 회원가입</a></p>
+            <div class="form-group">
+                <input type="email" placeholder="이메일(필수)" id="username" name="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="비밀번호(필수)" id="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <input style="margin-bottom: 42px" type="password" placeholder="비밀번호 재확인(필수)" id="password2"
+                       class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="담당자명(필수)" id="username" name="managerName" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="법인명(필수)" id="username" name="corpName" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="휴대전화번호(필수)" id="username" name="phone" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="사업자등록번호" id="username" name="corpNumber" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="회사전화번호" id="username" name="corpPhoneNumber" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+                <button class="full-btn" type="submit">등록</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

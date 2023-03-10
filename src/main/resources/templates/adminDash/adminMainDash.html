@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="ko"
+      xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05c5c3dffff5e6bd1c413734dd5a4a0e"></script>
+    <style>
+        .AZ-font {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .leftSideBar img {
+            width: 80%;
+            margin: 10%;
+        }
+
+
+        ul {
+            z-index: 2;
+            list-style-type: none;
+            background-color: #191919;
+            width: 4%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            height: 80%;
+            overflow: auto;
+        }
+
+        .secondUl {
+            list-style-type: none;
+            background-color: #767676;
+            width: 4%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            left: 0px;
+            top: 80%;
+            height: 20%;
+            overflow: auto;
+        }
+
+        .second {
+            width: 80%;
+            margin: 10%;
+        }
+
+        li a {
+            text-decoration: none;
+            display: block;
+            color: #000;
+            padding: 8px 15px 8px 15px;
+            font-weight: bold;
+        }
+
+        li a.job {
+            background-color: tomato;
+            color: #fff;
+        }
+
+        li a:hover:not(.job) {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .orderManage {
+            margin-left: 10%;
+            margin-right: 10%;
+            padding: 1px 0px;
+            display: flex;
+
+            border-left: none;
+            border-right: none;
+            margin-top: 12px;
+
+        }
+
+        .orderManage h2 {
+            margin: 1%;
+        }
+
+
+        #outcircle {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 90%;
+            height: 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin: 25px
+        }
+
+        .outcircle2 {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 150px;
+            height: 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .rangeSet button{
+            display: inline-block;
+            margin-right: 10px;        }
+
+        .incircle {
+            margin: auto;
+            text-align: left;
+        }
+
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+        }
+
+        .custom-select select {
+            display: none; /*hide original SELECT element:*/
+        }
+
+        .select-selected {
+            background-color: none;
+
+        }
+
+        .buttonReset {
+            background-color: #fff;
+            color: #E52415;
+            border: 1px solid #E52415;
+
+
+        }
+
+        /*style the arrow inside the select element:*/
+        .select-selected:after {
+            content: "";
+            top: 20px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            margin-left: 50px;
+            border: 6px solid transparent;
+            border-color: #e60808 transparent transparent transparent;
+        }
+
+        /*point the arrow upwards when the select box is open (active):*/
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #e60808 transparent;
+
+        }
+
+        /*style the items (options), including the selected item:*/
+        .select-items div, .select-selected {
+            padding: 8px 40px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        /*style items (options):*/
+        .select-items {
+            position: absolute;
+            background-color: #fff;
+
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+
+        /*hide the items when the select box is closed:*/
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div:hover, .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+
+            text-align: center;
+            border: none;
+            border-right: 2px solid #c8c8c8;
+            border-bottom: 2px solid #c8c8c8;
+        }
+
+        th {
+            border: none;
+            border-top: 2px solid #c8c8c8;
+            border-bottom: 2px solid #c8c8c8;
+            background: #e7e7e7;
+            color: #999999;
+        }
+
+        table {
+            width: 100%;
+            height: 100px;
+            border: none;
+            border-spacing: 0
+        }
+
+        .lastTd {
+
+        }
+
+        .col1 {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .col2 {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+        input[id="menuicon"] {
+            display: none;
+        }
+
+        input[id="menuicon2"] {
+            display: none;
+        }
+
+        input[id="menuicon"] + label {
+            right: 0;
+            top: 50%;
+            position: absolute;
+            z-index: 2;
+            transition: all .35s;
+            position: fixed
+        }
+
+        img[id="1234"] {
+            display: block;
+        }
+
+        img[id="5678"] {
+            display: none;
+        }
+
+        div[class="sidebar"] {
+            width: 560px;
+            height: 100%;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            right: -560px;
+            z-index: 2;
+            transition: all .35s;
+            transform: translateY(14%);
+        }
+
+        div[class="sidebar2"] {
+            width: 560px;
+            height: 100%;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            right: -560px;
+            z-index: 2;
+            transition: all .35s;
+            transform: translateY(14%);
+        }
+
+        div[class="recode"] {
+            border-bottom: 1px solid #c8c8c8;
+            margin-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        div[class="rangeSet"] {
+            position: absolute;
+            z-index: 2;
+            right: 9%;
+            transform: translateY(55px);
+            transition: all .35s;
+            display: flex;
+        }
+
+        a[class="recodeFont"] {
+            color: #999999;
+        }
+
+        input[id="menuicon"]:checked + label {
+            z-index: 2;
+            right: 560px;
+        }
+
+        input[id="menuicon"]:checked + label + div + div {
+            right: 33%;
+        }
+
+        input[id="menuicon"]:checked + label + div {
+            right: 0;
+        }
+
+        input[id="menuicon"]:checked + label img:nth-child(1) {
+            display: none;
+        }
+
+        input[id="menuicon"]:checked + label img:nth-child(2) {
+            display: block;
+        }
+    </style>
+    <script src="../../static/js/kakao_index_tmp.js"></script>
+</head>
+<body class="AZ-font">
+
+
+<ul class="leftSideBar">
+    <li><img style="width: 70%; margin: 10%" src="img/ajIcon.png"/></li>
+    <li><img type="button" onclick="showMap()" src="img/adminDashboardIcon.png"/></li>
+    <li><img type="button" onclick="showOrder()" src="img/adminOrderManageIcon.png"/></li>
+    <li><img type="button" onclick="showDeliver()" src="img/adminParcleState.png"/></li>
+    <li><img type="button" onclick="showDemand()" src="img/adminDemendIcon.png"/></li>
+    <li><img type="button" onclick="showStatist()" src="img/adminStatisticsIcon.png"/></li>
+</ul>
+<ul class="secondUl">
+    <li><img class="second" src="img/adminMyInfoIcon.png"/></li>
+    <li><img class="second" src="img/adminHomeIcon.png"/></li>
+
+</ul>
+
+
+<div id="orderWindow">
+    <div class="orderManage" style="margin-right: 0px;">
+        <div><h1 style="margin-bottom: 32px;">관리자 대시보드</h1></div>
+        <div style="margin-left: 51%;margin-top: 4%;"><img style="width: 75%;" src="img/adminDashMaker.png"></div>
+    </div>
+</div>
+<input type="checkbox" id="menuicon">
+<label for="menuicon">
+    <img id="1234" src="img/adminOrderManageLeft.png">
+    <img id="5678" src="img/adminOrderManageRight.png">
+</label>
+<div class="sidebar">
+    <div id="barIntent1">
+        <div id="outcircle">
+            <input class="incircle"
+                   id="inputData"
+                   style="border: none; width: 45%;  margin-left: 20px;margin-top: 5px;margin-bottom: 5px; outline: none;"
+                   placeholder='분실, 등의 파렛트를 검색해주세요.'><img type="button" style="margin-left: 40%"
+                                                          onclick="onClickFilterButton()" src="img/searchIcon.png">
+        </div>
+        <div style="display: flex; margin: 25px; width: 80%">
+            <div class="outcircle2">
+                <div class="incircle">
+                    <div class="custom-select" style="width:auto;">
+                        <select id="selectType1">
+                            <option value="0">전체</option>
+                            <option value="1">파렛트</option>
+                            <option value="2">트럭</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="outcircle2">
+                <div class="incircle">
+                    <div class="custom-select" style="width:auto;">
+                        <select id="selectType2">
+                            <option value="0">A11</option>
+                            <option value="1">A12</option>
+                            <option value="2">B11</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="outcircle2">
+                <div class="incircle">
+                    <div class="custom-select" style="width:auto;">
+                        <select id="selectType3">
+                            <option value="0">대기</option>
+                            <option value="1">이동</option>
+                            <option value="2">분실</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid #c8c8c8; margin: 25px; width: 90%;">
+
+            <div class="recode">
+                <a class="recodeFont">최근검색어가 뜹니다.</a>
+            </div>
+            <div class="recode">
+                <a class="recodeFont">최근검색어가 뜹니다.</a>
+            </div>
+            <div class="recode">
+                <a class="recodeFont">최근검색어가 뜹니다.</a>
+            </div>
+            <div class="recode">
+                <a class="recodeFont">최근검색어가 뜹니다.</a>
+            </div>
+        </div>
+    </div>
+    <div id="barIntent2" style="display: none; margin: 25px">
+        <div style="display: flex">
+            <img type="button" onclick="backToSpotInfo()" style="width: 10%;height: 43px;transform: translateY(40%);" src="img/adminOrderManageLeft.png">
+            <h2>00지점</h2>
+        </div>
+        <div>
+            <a style="font-size: 15px">경기도 덕양구 주교동 xxxxxxx</a>
+            <div>
+                <img style="transform: translateY(30%);height: 20px;" src="img/myIndexIcon.png">
+                <a style="font-size: 13px; color: #999999">재고가 넉넉 합니다.</a>
+            </div>
+        </div>
+        <table>
+            <tr style="height: 1%">
+                <th>남은재고</th>
+                <th>출고</th>
+                <th>분실</th>
+            </tr>
+            <tr style="font-size: 15px">
+                <td>1,200</td>
+                <td>200</td>
+                <td>5</td>
+            </tr>
+        </table>
+        <h3>주문목록</h3>
+        <table>
+            <tr style="height: 1%">
+                <th>계약처</th>
+                <th>주문내역</th>
+                <th>주문일</th>
+                <th>수령일</th>
+                <th>반납일</th>
+                <th>진행상황</th>
+            </tr>
+            <tr style="font-size: 15px">
+                <td>삼성전자</td>
+                <td>A11(21)/A12(20)</td>
+                <td>2023.01.02</td>
+                <td>2023.01.02</td>
+                <td>2023.01.02</td>
+                <td style="border-right: none">진행중</td>
+            </tr>
+        </table>
+
+        <h3>재고 현황</h3>
+        <table>
+            <tr style="height: 1%">
+                <th>제품이름</th>
+                <th>재고</th>
+                <th>분실</th>
+            </tr>
+            <tr style="font-size: 15px">
+                <td>파렛트 A11</td>
+                <td>120개</td>
+                <td style="border-right: none">2개</td>
+            </tr>
+        </table>
+    </div>
+
+
+</div>
+
+<div class="rangeSet">
+    <div class="outcircle2" style="background-color: #fff;color: #999999;">
+        <div class="incircle">
+            <div class="custom-select" style="width:auto;">
+                <select id="selectType4">
+                    <option  value="0">반경설정</option>
+                    <option id="rangeInit" value="1" onclick="FilterInitMap();clickUnRangeButton();">전체</option>
+                    <option id="10km"  value="2" onclick="preKmButtonUnCheck(this.id);clickKmButton(this.id);">10KM</option>
+                    <option id="20km"  value="3" onclick="preKmButtonUnCheck(this.id);clickKmButton(this.id);">20KM</option>
+                    <option id="30km"  value="4" onclick="preKmButtonUnCheck(this.id);clickKmButton(this.id);">30KM</option>
+                    <option id="10km2" style="display: none" value="5" onclick=";clickKmButton(this.id);">10KM</option>
+                    <option id="20km2" style="display: none" value="6" onclick=";clickKmButton(this.id);">20KM</option>
+                    <option id="30km2" style="display: none" value="7" onclick=";clickKmButton(this.id);">30KM</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <button class="buttonReset" onclick="FilterInitMap();clickUnRangeButton();">변경초기화</button>
+    <button class="buttonReset" onclick="initPage();">실시간 업데이트</button>
+</div>
+
+<div class=" orderManage" id="map" style="height:1000px; width: 100%; margin-left: 0%;"></div>
+<script type="text/javascript" src="js/kakao_admin_index_tmp.js"></script>
+
+<script>
+    var x, i, j, l, ll, selElmnt, a, b, c;
+    /*look for any elements with the class "custom-select":*/
+    x = document.getElementsByClassName("custom-select");
+    l = x.length;
+    for (i = 0; i < l; i++) {
+        selElmnt = x[i].getElementsByTagName("select")[0];
+        ll = selElmnt.length;
+        /*for each element, create a new DIV that will act as the selected item:*/
+        a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x[i].appendChild(a);
+        /*for each element, create a new DIV that will contain the option list:*/
+        b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
+        b.style.marginTop = '1px';
+        for (j = 1; j < ll; j++) {
+            /*for each option in the original select element,
+            create a new DIV that will act as an option item:*/
+            c = document.createElement("DIV");
+            c.innerHTML = selElmnt.options[j].innerHTML;
+            c.id = selElmnt.options[j].id;
+            c.style.display = selElmnt.options[j].style.display;
+            c.attributes.onclick = selElmnt.options[j].attributes.onclick;
+            c.addEventListener("click", function (e) {
+                /*when an item is clicked, update the original select box,
+                and the selected item:*/
+                var y, i, k, s, h, sl, yl;
+                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                sl = s.length;
+                h = this.parentNode.previousSibling;
+                for (i = 0; i < sl; i++) {
+                    if (s.options[i].innerHTML == this.innerHTML) {
+                        s.selectedIndex = i;
+                        h.innerHTML = this.innerHTML;
+                        y = this.parentNode.getElementsByClassName("same-as-selected");
+                        yl = y.length;
+
+                        for (k = 0; k < yl; k++) {
+                            y[k].removeAttribute("class");
+                        }
+                        this.setAttribute("class", "same-as-selected");
+                        break;
+                    }
+                }
+                if (this.id != undefined) {
+                    if(this.id[-1] == "rangeInit"){
+                        FilterInitMap();clickUnRangeButton();
+                    }
+
+                    else if(this.id[-1] == "2"){
+                        clickKmButton(this.id);
+                    }else{
+                        preKmButtonUnCheck(this.id);
+                        clickKmButton(this.id);
+                    }
+                }
+                h.click();
+            });
+            b.appendChild(c);
+        }
+        x[i].appendChild(b);
+        a.addEventListener("click", function (e) {
+            /*when the select box is clicked, close any other select boxes,
+            and open/close the current select box:*/
+            e.stopPropagation();
+            closeAllSelect(this);
+
+            this.nextSibling.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+        });
+    }
+
+    function closeAllSelect(elmnt) {
+        /*a function that will close all select boxes in the document,
+        except the current select box:*/
+        var x, y, i, xl, yl, arrNo = [];
+        x = document.getElementsByClassName("select-items");
+        y = document.getElementsByClassName("select-selected");
+        xl = x.length;
+        yl = y.length;
+
+        for (i = 0; i < yl; i++) {
+            if (elmnt == y[i]) {
+                arrNo.push(i)
+            } else {
+                y[i].classList.remove("select-arrow-active");
+            }
+        }
+        for (i = 0; i < xl; i++) {
+            if (arrNo.indexOf(i)) {
+                x[i].classList.add("select-hide");
+            }
+        }
+    }
+
+    /*if the user clicks anywhere outside the select box,
+    then close all select boxes:*/
+    document.addEventListener("click", closeAllSelect);
+</script>
+
+<script>
+    var perClickButton = "";
+    function clickKmButton(button_id){
+
+        var km1 = document.getElementById(button_id);
+        var km2 = '0';
+        var km  = button_id.slice(0,2) * 1000;
+        if(km1.id.at(-1) == 'm'){
+            km2 = document.getElementById(button_id +'2');
+            // console.log(1);
+            clickRangeButton(km);
+        }else{
+            // console.log(2);
+            clickUnRangeButton()
+            km2 = document.getElementById(button_id.slice(0,button_id.length - 1));
+            perClickButton = "";
+        }
+
+        if(km1.style.display=='none'){
+            km1.style.display = 'block';
+            km2.style.display = 'none';
+        }else{
+            km1.style.display = 'none';
+            km2.style.display = 'block';
+        }
+    }
+    function preKmButtonUnCheck(button_id){
+        if (perClickButton != ""){
+            clickKmButton(perClickButton);
+            perClickButton = button_id +'2';
+        }else{
+            perClickButton = button_id +'2';
+        }
+    }
+</script>
+</body>
+</html>
