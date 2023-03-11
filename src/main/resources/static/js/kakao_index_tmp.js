@@ -258,9 +258,6 @@ function clickUnRangeButton() {
 
 function inputFilterMap(data) {
     for (var i = 0; i < markers.length; i++) {
-        if (markers.at(i).getMap() == null) {
-            continue
-        }
         var title = markers.at(i).getTitle()
 
         if (title.slice(0, 3) == data) {
