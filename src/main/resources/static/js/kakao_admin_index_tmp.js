@@ -423,6 +423,9 @@ function showDeliver() {
 function showMap() {
     location.href = urlName + '/dashMain';
 }
+function showAdd(){
+    location.href = urlName + '/addPallet';
+}
 
 function backToSpotInfo(){
     var first = document.getElementById("barIntent1");

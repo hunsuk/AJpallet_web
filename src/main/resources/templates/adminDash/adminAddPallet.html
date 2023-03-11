@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <style type="text/css">
+        .AZ-font{
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .leftSideBar img {
+            width: 80%;
+            margin: 10%;
+        }
+
+        ul {
+            list-style-type: none;
+            background-color: #191919;
+            width: 4%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            height: 80%;
+            overflow: auto;
+        }
+
+        .secondUl {
+            list-style-type: none;
+            background-color: #767676;
+            width: 4%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            left: 0px;
+            top: 80%;
+            height: 20%;
+            overflow: auto;
+        }
+
+        .second {
+            width: 80%;
+            margin: 10%;
+        }
+
+        li a {
+            text-decoration: none;
+            display: block;
+            color: #000;
+            padding: 8px 15px 8px 15px;
+            font-weight: bold;
+        }
+
+        li a.job {
+            background-color: tomato;
+            color: #fff;
+        }
+
+        li a:hover:not(.job) {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .orderManage {
+            margin-left: 10%;
+            margin-right: 10%;
+            padding: 1px 0px;
+            display: flex;
+
+            border-left: none;
+            border-right: none;
+            margin-top: 12px;
+
+        }
+
+        .orderManage h2 {
+            margin: 1%;
+        }
+
+
+        #outcircle {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 530px;
+            height: 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        #outcircle2 {
+            display: flex;
+            background-color: none;
+            border: 2px solid #E52415;
+            width: 150px;
+            height: 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        #incircle {
+            margin: auto;
+            text-align: left;
+        }
+
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+        }
+
+        .custom-select select {
+            display: none;
+            /*hide original SELECT element:*/
+        }
+
+        .select-selected {
+            background-color: none;
+
+        }
+
+        .buttonReset {
+            background-color: #E52415;
+            color: #FFF;
+            border: none;
+            width: 10%;
+            padding: 12px;
+        }
+
+        /*style the arrow inside the select element:*/
+        .select-selected:after {
+            content: "";
+            top: 20px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            margin-left: 50px;
+            border: 6px solid transparent;
+            border-color: #e60808 transparent transparent transparent;
+        }
+
+        /*point the arrow upwards when the select box is open (active):*/
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #e60808 transparent;
+
+        }
+
+        /*style the items (options), including the selected item:*/
+        .select-items div,
+        .select-selected {
+            padding: 8px 40px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        /*style items (options):*/
+        .select-items {
+            position: absolute;
+            background-color: #fff;
+
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+
+        /*hide the items when the select box is closed:*/
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div:hover,
+        .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+
+            text-align: center;
+            border: none;
+            border-right: 2px solid #c8c8c8;
+            border-bottom: 2px solid #c8c8c8;
+        }
+
+        th {
+            border: none;
+            border-top: 2px solid #c8c8c8;
+            border-bottom: 2px solid #c8c8c8;
+            background: #e7e7e7;
+            color: #999999;
+        }
+
+        input {
+            text-align: center;
+
+        }
+
+        table {
+            width: 100%;
+            height: 100px;
+            border: none;
+            border-spacing: 0
+        }
+
+
+
+        .col1 {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .col2 {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+    </style>
+
+    <title>AddPallet</title>
+</head>
+<body class="AZ-font">
+<div id="orderWindow">
+    <div class="orderManage">
+        <h1 style="margin-bottom: 32px;">파렛트 등록</h1>
+        <input type="hidden" id="csrf_data" th:name="${_csrf.headerName}" th:value="${_csrf.token}"/>
+    </div>
+    <div class="orderManage" style="display: flex;">
+
+        <input id="addCount" style="margin-right: 12px" placeholder="10"/>
+        <button type="button" class="buttonReset" onclick="addPallet()">항목 추가</button>
+        <button type="button" class="buttonReset" onclick="delPallet()" style="margin-left:1%">항목 삭제</button>
+        <button type="button" class="buttonReset" onclick="addDataSend()" style="margin-left:1%">전송</button>
+    </div>
+    <br>
+    <div class="orderManage">
+        <table id="palletAddTable">
+            <tbody>
+            <tr>
+                <th style="border-left: none"><input class="checkBox" type="checkbox"></th>
+                <th>고유번호</th>
+                <th>담당지점</th>
+            </tr>
+            <!-- <tr>
+                <td style="border-left: none"><input class="checkBox" id="1" type="checkbox"></td>
+                <td><input placeholder="A11-3"></td>
+                <td><input placeholder="대구지점"></td>
+            </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let inputId = 0;
+        const table = document.getElementById('palletAddTable')
+        const count = document.getElementById('addCount')
+        var csrf = document.getElementById('csrf_data')
+        // let urlName = "http://localhost:8080";
+        let urlName = "http://20.39.194.142:8080";
+
+        function addPallet(){
+            if(count.value == ''){
+                for (let i = 0; i < 10; i++){
+                    const newRow = table.insertRow(1);
+                    const row1 = newRow.insertCell(0);
+                    const row2 = newRow.insertCell(1);
+                    const row3 = newRow.insertCell(2);
+                    row1.innerHTML = "<td style=\"border-left: none\"><input class=\"checkBox\" id="+inputId+" type=\"checkbox\"></td>"
+                    row2.innerHTML = "<td><input placeholder=\"A11-3\"></td>"
+                    row3.innerHTML = "<td><input placeholder=\"대구지점\"></td>\n"
+                    inputId += 1;
+                }
+            }else{
+                const addCount = parseInt(count.value);
+                for (let i =0; i < addCount; i++){
+                    const newRow = table.insertRow(1);
+                    const row1 = newRow.insertCell(0);
+                    const row2 = newRow.insertCell(1);
+                    const row3 = newRow.insertCell(2);
+                    row1.innerHTML = "<td style=\"border-left: none\"><input class=\"checkBox\" id="+inputId+" type=\"checkbox\"></td>"
+                    row2.innerHTML = "<td><input placeholder=\"A11-3\"></td>"
+                    row3.innerHTML = "<td><input placeholder=\"대구지점\"></td>\n"
+                    inputId += 1;
+
+                }
+            }
+        }
+        function delPallet(){
+            for (let i = 0; i < table.rows.length; i++){
+                let check = table.rows[i].cells[0].childNodes[0].checked;
+                if (check){
+                    table.deleteRow(i);
+                    inputId -=1;
+                }
+            }
+        }
+        function addDataSend(){
+            var palletId = new Array();
+            var manage = new Array();
+            var reqURl = urlName + "/getPalletAdd"
+
+            for (let i = 1; i < table.rows.length; i++){
+                var id = table.rows[i].childNodes[1].childNodes[0].value
+                var part = table.rows[i].childNodes[2].childNodes[0].value
+                    if (id != '' && part !=''){
+                        palletId.push(id.toString());
+                        manage.push(part.toString());
+                    }
+            }
+
+            console.log(palletId);
+            console.log(manage);
+
+            var jsonData = {
+                "id" : palletId,
+                "manage" : manage
+            }
+
+            console.log(JSON.stringify(jsonData));
+            console.log(csrf.value)
+            console.log(csrf.name)
+
+            $.ajax({
+                url : reqURl,
+                data: JSON.stringify(jsonData),
+                type: "post",
+                    beforeSend : function(xhr){
+                    xhr.setRequestHeader(<csrf className="name"></csrf>, csrf.value);
+                },
+                async: true,
+                timeout:5000,
+                dataType: "TEXT",
+                contentType :"application/json; charset=utf-8",
+                success: function (response){
+                    alert("전송성공")
+                },
+                error: function (xhr){
+                    alert("전송실패")
+                },
+                complete: function (data, textStatus){
+                }
+            });
+
+        }
+    </script>
+</div>
+
+</body>
+</html>

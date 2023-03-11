@@ -2,6 +2,7 @@ package com.example.azprojectpallet.controller;
 
 
 import com.example.azprojectpallet.domain.*;
+import com.example.azprojectpallet.dto.GetDataPallet;
 import com.example.azprojectpallet.dto.GetPalletIndex;
 import com.example.azprojectpallet.dto.SendMapInfo;
 import com.example.azprojectpallet.dto.SendReservationInfo;
@@ -25,9 +26,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
+@RequestMapping
 public class RestApiController {
     @Autowired
     private PalletRepository palletRepository;
@@ -218,8 +221,22 @@ public class RestApiController {
         RentItem rentItem = rentItemRepository.findByPalletId(id);
         rentItem.setPosition(lat + "," + lon);
         rentItemRepository.save(rentItem);
+    }
 
+    @PostMapping("/getPalletAdd")
+    public String GetPalletAdd(@RequestBody GetDataPallet param){
+        System.out.println(param.getId());
+        System.out.println(param.getManage());
+        ArrayList<String> id = param.getId();
+        ArrayList<String> manager = param.getManage();
 
+        for (int i = 0; i < id.size(); i++){
+            RentItem rentItem = new RentItem();
+            rentItem.setPalletId(id.get(i));
+            rentItem.setManagePart(manager.get(i));
+            rentItemRepository.save(rentItem);
+        }
+        return "ok";
     }
 
 

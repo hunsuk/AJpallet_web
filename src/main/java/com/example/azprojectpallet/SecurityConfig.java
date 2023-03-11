@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
                 .authorizeRequests() // 6
                 .antMatchers("/start","/startInit","/login", "/signup", "/user","/error/403","/test1","/test2","/test3","/test4","/test5","/test6","/test7","/getIndexPallet").permitAll() // 누구나 접근 허용
                 .antMatchers("/","/publish_req","/setBuket","/myPage","/check_my_request","/request_del","/main","/prediction_user","/requestDetail","/prdicRequest","/prdicRequest_send","/request_popup","/request_send","/getSendingPallet","/request_check_popup","/requestReservationSend").hasRole("USER") // USER, ADMIN만 접근 가능
-                .antMatchers("/admin","/publish_resp","prediction_admin","/request_process","/control_request","/dashboard_admin_atration","/orderDetail","/deliverStatus","/returnList","/orderStatus","/getPalletInfo").hasRole("ADMIN") // ADMIN만 접근 가능
+                .antMatchers("/admin","/publish_resp","prediction_admin","/request_process","/control_request","/dashboard_admin_atration","/orderDetail","/deliverStatus","/returnList","/orderStatus","/getPalletInfo","/getPalletAdd").hasRole("ADMIN") // ADMIN만 접근 가능
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and()
                 .formLogin() // 7

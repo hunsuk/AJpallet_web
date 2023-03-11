@@ -201,10 +201,15 @@ public class ApiController {
     }
 
     @GetMapping("/deliverDetail")
-    public String deliverDetail(@RequestParam(value="id") String id, Model model){
+    public String deliverDetail(@RequestParam(value="id") String id, Model model) {
         System.out.println(id);
 
         return "adminDash/adminDeliverDetailDashboard";
+    }
+
+    @GetMapping("/addPallet")
+    public String addPallet(){
+        return "adminDash/adminAddPallet";
     }
 
     @GetMapping("/returnList")

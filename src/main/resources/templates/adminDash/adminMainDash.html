@@ -20,6 +20,9 @@
         .AZ-font {
             font-family: 'Noto Sans KR', sans-serif;
         }
+        body {
+                overflow: hidden;
+            }
 
         .leftSideBar img {
             width: 80%;
@@ -37,7 +40,7 @@
             position: fixed;
             left: 0px;
             top: 0px;
-            height: 80%;
+            height: 75%;
             overflow: auto;
         }
 
@@ -49,9 +52,9 @@
             margin: 0;
             position: fixed;
             left: 0px;
-            top: 80%;
-            height: 20%;
-            overflow: auto;
+            top: 75%;
+            height: 25%;
+            overflow: hidden;
         }
 
         .second {
@@ -338,7 +341,7 @@
 <ul class="secondUl">
     <li><img class="second" src="img/adminMyInfoIcon.png"/></li>
     <li><img class="second" src="img/adminHomeIcon.png"/></li>
-
+    <li><img class="second" onclick="showAdd()" src="img/adminDashAddIcon.svg"/></li>
 </ul>
 
 
