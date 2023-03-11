@@ -337,7 +337,7 @@
                 data: JSON.stringify(jsonData),
                 type: "post",
                     beforeSend : function(xhr){
-                    xhr.setRequestHeader(<csrf className="name"></csrf>, csrf.value);
+                    xhr.setRequestHeader(csrf.name, csrf.value);
                 },
                 async: true,
                 timeout:5000,
