@@ -23,6 +23,7 @@
         }
 
         ul {
+            z-index: 2;
             list-style-type: none;
             background-color: #191919;
             width: 4%;
@@ -31,7 +32,7 @@
             position: fixed;
             left: 0px;
             top: 0px;
-            height: 80%;
+            height: 75%;
             overflow: auto;
         }
 
@@ -43,9 +44,9 @@
             margin: 0;
             position: fixed;
             left: 0px;
-            top: 80%;
-            height: 20%;
-            overflow: auto;
+            top: 75%;
+            height: 25%;
+            overflow: hidden;
         }
 
         .second {
@@ -231,8 +232,23 @@
     </style>
 
     <title>AddPallet</title>
+
 </head>
 <body class="AZ-font">
+
+<ul class="leftSideBar">
+    <li><img style="width: 70%; margin: 10%" src="img/ajIcon.png"/></li>
+    <li><img type="button" onclick="showMap()" src="img/adminDashboardIcon.png"/></li>
+    <li><img type="button" onclick="showOrder()" src="img/adminOrderManageIcon.png"/></li>
+    <li><img type="button" onclick="showDeliver()" src="img/adminParcleState.png"/></li>
+    <li><img type="button" onclick="showDemand()" src="img/adminDemendIcon.png"/></li>
+    <li><img type="button" onclick="showStatist()" src="img/adminStatisticsIcon.png"/></li>
+</ul>
+<ul class="secondUl">
+    <li><img class="second" src="img/adminMyInfoIcon.png"/></li>
+    <li><img class="second" src="img/adminHomeIcon.png"/></li>
+    <li><img class="second" onclick="showAdd()" src="img/adminDashAddIcon.svg"/></li>
+</ul>
 <div id="orderWindow">
     <div class="orderManage">
         <h1 style="margin-bottom: 32px;">파렛트 등록</h1>
@@ -354,6 +370,20 @@
                 }
             });
 
+        }
+        function showOrder() {
+            location.href = urlName + '/orderStatus';
+        }
+
+        function showDeliver() {
+            location.href = urlName + '/deliverStatus';
+        }
+
+        function showMap() {
+            location.href = urlName + '/dashMain';
+        }
+        function showAdd(){
+            location.href = urlName + '/addPallet';
         }
     </script>
 </div>

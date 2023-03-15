@@ -106,6 +106,7 @@ public class RestApiController {
         spot2.setName("서울지점");
         spotRepository.save(spot2);
 
+
         Reservation reservation = new Reservation();
         reservation.setOrderAccount(user);
         reservation.setStatus("접수중");

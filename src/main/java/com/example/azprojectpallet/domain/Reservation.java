@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.sql.Date;

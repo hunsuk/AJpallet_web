@@ -167,8 +167,8 @@ public class ApiController {
 
     @PostMapping("/requestReservationSend")
     public String requestReservationSend(@AuthenticationPrincipal User user, @ModelAttribute GetReservationInfo reservationInfo){
-
-
+        Truck truck = truckRepository.getReferenceById(1L);
+        Spot spot = spotRepository.getReferenceById(3L);
 
         for (int i = 0; i < reservationInfo.getChecked().split(",").length; i++){
             Reservation reservation = new Reservation();
@@ -180,6 +180,8 @@ public class ApiController {
             reservation.setRentStartDate(Date.valueOf(reservationInfo.getStartDay().split(",")[i]));
 
             reservation.setRentEndDate(Date.valueOf(reservationInfo.getEndDay().split(",")[i]));
+            reservation.setManageSpot(spot);
+            reservation.setOrderTruck(truck);
 
 
             System.out.println(reservationInfo.getCount().split(",")[i].equals(""));

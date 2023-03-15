@@ -11,6 +11,7 @@
         }
 
         ul {
+            z-index: 2;
             list-style-type: none;
             background-color: #191919;
             width: 4%;
@@ -19,7 +20,7 @@
             position: fixed;
             left: 0px;
             top: 0px;
-            height: 80%;
+            height: 75%;
             overflow: auto;
         }
 
@@ -31,9 +32,9 @@
             margin: 0;
             position: fixed;
             left: 0px;
-            top: 80%;
-            height: 20%;
-            overflow: auto;
+            top: 75%;
+            height: 25%;
+            overflow: hidden;
         }
 
         .second {
@@ -211,6 +212,7 @@
             padding-right: 3px;
         }
     </style>
+
 </head>
 <body>
 
@@ -226,8 +228,9 @@
 <ul class="secondUl">
     <li><img class="second" src="img/adminMyInfoIcon.png"/></li>
     <li><img class="second" src="img/adminHomeIcon.png"/></li>
-
+    <li><img class="second" onclick="showAdd()" src="img/adminDashAddIcon.svg"/></li>
 </ul>
+
 
 
 <div id="orderWindow">
@@ -388,13 +391,7 @@
     // let urlName = "http://localhost:8080";
     let urlName = "http://20.39.194.142:8080";
 
-    function showOrder() {
-        location.href= urlName+ '/orderStatus';
-    }
 
-    function showDeliver(){
-        location.href= urlName+ '/deliverStatus';
-    }
 
     function showDetail(){
         var checkBox = document.getElementsByClassName("checkBox");
@@ -407,12 +404,19 @@
         }
 
     }
-    function showDeliver(){
-        location.href= urlName + '/deliverStatus';
+    function showOrder() {
+        location.href = urlName + '/orderStatus';
     }
 
-    function showMap(){
+    function showDeliver() {
+        location.href = urlName + '/deliverStatus';
+    }
+
+    function showMap() {
         location.href = urlName + '/dashMain';
+    }
+    function showAdd(){
+        location.href = urlName + '/addPallet';
     }
 
 

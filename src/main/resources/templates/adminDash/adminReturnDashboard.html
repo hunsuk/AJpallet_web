@@ -11,6 +11,7 @@
         }
 
         ul {
+            z-index: 2;
             list-style-type: none;
             background-color: #191919;
             width: 4%;
@@ -19,7 +20,7 @@
             position: fixed;
             left: 0px;
             top: 0px;
-            height: 80%;
+            height: 75%;
             overflow: auto;
         }
 
@@ -31,9 +32,9 @@
             margin: 0;
             position: fixed;
             left: 0px;
-            top: 80%;
-            height: 20%;
-            overflow: auto;
+            top: 75%;
+            height: 25%;
+            overflow: hidden;
         }
 
         .second {
@@ -211,6 +212,7 @@
             padding-right: 3px;
         }
     </style>
+
 </head>
 <body>
 
@@ -226,7 +228,7 @@
 <ul class="secondUl">
     <li><img class="second" src="img/adminMyInfoIcon.png"/></li>
     <li><img class="second" src="img/adminHomeIcon.png"/></li>
-
+    <li><img class="second" onclick="showAdd()" src="img/adminDashAddIcon.svg"/></li>
 </ul>
 
 
@@ -336,6 +338,7 @@
     /*if the user clicks anywhere outside the select box,
     then close all select boxes:*/
     document.addEventListener("click", closeAllSelect);
+
 </script>
 
 <script>
